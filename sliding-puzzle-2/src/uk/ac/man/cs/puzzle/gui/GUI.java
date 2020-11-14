@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,6 +47,8 @@ public class GUI extends JPanel {
 		puzzleModel = new Model(ROWS, COLS);
 		puzzleGraphics = new GraphicsPanel(puzzleModel, this,rows, cols);
 		
+		
+		
 		//current moves label
 		currentMovesLabel = new JLabel();
 		currentMovesLabel.setText(""+ puzzleModel.getMoveCount());
@@ -57,6 +60,10 @@ public class GUI extends JPanel {
 		Moves.setText("Moves: ");
 		
 		
+		JPanel MovesPanel = new JPanel();
+		MovesPanel.setLayout(new FlowLayout());
+		MovesPanel.add(Moves);
+		MovesPanel.add(currentMovesLabel);
 		
 
 		// Create game timer panel
@@ -65,13 +72,19 @@ public class GUI extends JPanel {
 		gameTimerPanel.add(timerLabel);
 		gameTimerPanel.add(currentTimeLabel);
 		gameTimerPanel.add(unitsLabel);
+		
+		JPanel Menu = new JPanel();
+		Menu.setLayout(new BoxLayout(Menu,BoxLayout.Y_AXIS)); 
+		Menu.add(gameTimerPanel);
+		Menu.add(MovesPanel);
+		
 
 		// Set the layout and add the components
 		this.setLayout(new BorderLayout());
 		this.add(controlPanel, BorderLayout.NORTH);
 		this.add(puzzleGraphics, BorderLayout.CENTER);
-		this.add(Moves,BorderLayout.SOUTH);
-		this.add(gameTimerPanel, BorderLayout.SOUTH);
+		//this.add(Moves,BorderLayout.SOUTH);
+		this.add(Menu, BorderLayout.SOUTH);
 
 		// Set up the Swing timer
 		gameTimer = new Timer(1000, new ActionListener() {
@@ -91,7 +104,8 @@ public class GUI extends JPanel {
 		// Start the timer for the first game round
 		gameTimer.start();
 
-		this.add(Moves,BorderLayout.SOUTH);
+
+		//this.add(Moves,BorderLayout.SOUTH);
 	}
 
 	Model getPuzzleModel() {
