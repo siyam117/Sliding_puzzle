@@ -20,6 +20,7 @@ public class GUI extends JPanel {
 	private int ROWS;
 	private int COLS;
 	JLabel currentMovesLabel;
+	JLabel Moves;
 
 	public GUI(int rows, int cols) {
 		// Create a button. Add a listener to it.
@@ -35,12 +36,26 @@ public class GUI extends JPanel {
 		ROWS = rows;
 		COLS = cols;
 		puzzleModel = new Model(ROWS, COLS);
-		puzzleGraphics = new GraphicsPanel(puzzleModel, rows, cols);
+		puzzleGraphics = new GraphicsPanel(puzzleModel, this,rows, cols);
+		
+		//current moves label
+		currentMovesLabel = new JLabel();
+		currentMovesLabel.setText(""+ puzzleModel.getMoveCount());
+		currentMovesLabel.setBounds(55, 232, 100, 100);
+		add(currentMovesLabel);
+		
+		//MOves Label
+		Moves = new JLabel();
+		Moves.setText("Moves: ");
+		
+		
+		
 
 		// Set the layout and add the components
 		this.setLayout(new BorderLayout());
 		this.add(controlPanel, BorderLayout.NORTH);
 		this.add(puzzleGraphics, BorderLayout.CENTER);
+		this.add(Moves,BorderLayout.SOUTH);
 	}
 
 	Model getPuzzleModel() {
@@ -53,6 +68,7 @@ public class GUI extends JPanel {
 
 	public class NewGameAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			currentMovesLabel.setText("0");
 			puzzleModel.reset();
 			puzzleModel.shuffle();
 			puzzleGraphics.repaint();
